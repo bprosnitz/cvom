@@ -1,17 +1,20 @@
+#ifndef ENCODER_H
+#define ENCODER_H
+
 #include "encbuf.h"
 
 typedef struct {
-  tid_stack *uint64_t
-  num_tids uint64_t
+  uint64_t* tid_stack;
+  uint64_t num_tids;
   encbuf *buf;
 } encoder;
 
 encoder* new_encoder();
 
 void start(encoder *e, uint64_t tid);
-void finish(encoder *e, );
+void finish(encoder *e);
 void start_any(encoder *e, uint64_t tid);
-void finish_any(encoder *e, );
+void finish_any(encoder *e);
 
 void from_bool(encoder *e, uint8_t bval);
 void from_uint(encoder *e, uint64_t uval);
@@ -39,3 +42,5 @@ void finish_key(encoder *e);
 void start_field(encoder *e, uint64_t field_index);
 void finish_key_start_field(encoder *e);
 void finish_field(encoder *e);
+
+#endif 

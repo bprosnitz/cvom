@@ -2,6 +2,9 @@
 
 #include "low_level_write.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 encoder* new_encoder() {
   encoder *e = (encoder*)malloc(sizeof(encoder));
   e->tid_stack = malloc(sizeof(uint64_t));
@@ -20,7 +23,7 @@ void start_any(encoder *e, uint64_t tid) {
   e->num_tids++;
   uint64_t* newstack = malloc(e->num_tids);
   memcpy(newstack, e->tid_stack, sizeof(uint64_t)*(e->num_tids-1));
-  newstack[num_tids-1] = tid;
+  newstack[e->num_tids-1] = tid;
   e->tid_stack = newstack;
 }
 void finish_any(encoder *e) {
@@ -58,7 +61,7 @@ void start_set(encoder *e, uint64_t len) {
   write_uint(e->buf, len);
 }
 void finish_set(encoder *e) {}
-void start_map(encoder *e, uint64_t) {
+void start_map(encoder *e, uint64_t len) {
   write_uint(e->buf, len);
 }
 void finish_map(encoder *e) {}

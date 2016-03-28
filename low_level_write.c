@@ -55,21 +55,21 @@ int write_uint(encbuf *buf, uint64_t uval) {
 	}
 }
 
-int write_int(uint8_t *buf, uint64_t ival) {
+int write_int(encbuf *buf, int64_t ival) {
 	return write_uint(buf, int_to_uint(ival));
 }
 
-int write_float(uint8_t *buf, double fval) {
+int write_float(encbuf *buf, double fval) {
 	uint64_t uval = *(uint64_t*)(&fval);
 	return write_uint(buf, reverse_byte_order(uval));
 }
 
-int write_bool(uint8_t *buf, uint8_t bool) {
+int write_bool(encbuf *buf, uint8_t bool) {
 	return write_uint(buf, bool);
 }
 
-int write_bytes(uint8_t *buf, uint8_t *in_bytes, uint64_t len) {
+int write_bytes(encbuf *buf, uint8_t *in_bytes, uint64_t len) {
 	int len_byte_count = write_uint(buf, len);
-	encbuf_write(buf, in_bytes, len)
+	encbuf_write(buf, in_bytes, len);
 	return len_byte_count + (int)len;
 }
